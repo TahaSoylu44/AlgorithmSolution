@@ -1,5 +1,5 @@
 class Solution:
-    def twoSum(self, nums: List[int], target: int) -> List[int]:
+    def twoSum(nums, target):
         i = 0
         while i < len(nums):
             current = nums[i]
@@ -13,6 +13,5 @@ class Solution:
                     break
             else:
                 i += 1
-        
+    
         return [i,needed_index]
-        
