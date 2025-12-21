@@ -9,7 +9,7 @@ Ondan sonra belli bir noktada yapılması gereken en mantıklı davranışı
 kaydettim.Bilgisayarı geleceği göreceği zaman elinde 2 seçenek var.
 Ya listenin başından kart seçecek ya da sonundan.Benim bunlardan ikisini 
 karşılaştırmam lazımdı laikn greedy yaklaşamazdın.Her zaman en büyüğünü seçmek 
-kazandırmıyor.O yüzden bir heşper fonksiyonu lazımdı çünkü yapacağım hamlenin sonuçlarını 
+kazandırmıyor.O yüzden bir helper fonksiyonu lazımdı çünkü yapacağım hamlenin sonuçlarını 
 hesaplamalıydım.Yaptığım her hareket sonucu rakibin en mantıklı hareketini çıkardım.
 Bu şekilde ilerleyerek kazanıp kazanmayacağımı buldum.
 */
