@@ -1,1 +1,1 @@
-subCounter
+n % 100
