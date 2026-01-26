@@ -1,0 +1,118 @@
+// ============================================================
+//      C++ VERI YAPILARI KOPYA KAGIDI (DATA STRUCTURES)
+// ============================================================
+
+// TÜMÜNÜ TEK SEFERDE EKLEMEK İÇİN:
+#include <bits/stdc++.h> 
+
+// AYRI AYRI EKLEMEK İSTERSEN:
+#include <iostream>
+#include <vector>
+#include <set>
+#include <map>
+#include <unordered_set>
+#include <unordered_map>
+#include <algorithm> // sort, reverse vb. icin
+
+using namespace std;
+
+// ============================================================
+// 1. VECTOR (Dinamik Dizi) - <vector>
+//    Kullanım: Sıralı liste, dizi yerine geçer.
+// ============================================================
+vector<int> v;              // Boş vektör
+vector<int> v2(10, 0);      // 10 elemanlı, hepsi 0
+
+v.push_back(5);             // Sona ekle -> O(1)
+v.pop_back();               // Sondan sil -> O(1)
+v.size();                   // Boyut
+v.empty();                  // Boş mu? (true/false)
+v.clear();                  // Hepsini sil
+v[0];                       // İlk elemana erişim -> O(1)
+v.front();                  // İlk eleman
+v.back();                   // Son eleman
+
+// Sıralama (Sort)
+sort(v.begin(), v.end());   // Küçükten büyüğe -> O(N log N)
+reverse(v.begin(), v.end());// Ters çevir
+
+// ============================================================
+// 2. SET (Sıralı Küme) - <set>
+//    Kullanım: Elemanları OTOMATİK SIRALAR ve EŞSİZ (Unique) tutar.
+//    Yapı: Binary Search Tree (Red-Black Tree)
+// ============================================================
+set<int> s;
+
+s.insert(10);               // Ekle (Sıralı yere koyar) -> O(log N)
+s.insert(10);               // Etkisiz (Zaten var)
+s.erase(10);                // Sil -> O(log N)
+
+// Arama
+if (s.count(10)) {}         // Varsa 1, yoksa 0 döner -> O(log N)
+auto it = s.find(10);       // İterator döner, yoksa s.end() döner
+
+// İlk ve Son Eleman (En küçük ve En büyük)
+int min = *s.begin();       // En küçük
+int max = *s.rbegin();      // En büyük
+
+// ============================================================
+// 3. UNORDERED_SET (Sırasız Küme) - <unordered_set>
+//    Kullanım: Sıra önemsiz, sadece "VAR MI YOK MU" bakmak için.
+//    Yapı: Hash Table (Çok Hızlı!)
+// ============================================================
+unordered_set<int> us;
+
+us.insert(5);               // Ekle -> O(1) (Ortalama)
+us.erase(5);                // Sil -> O(1)
+if (us.count(5)) {}         // Var mı? -> O(1)
+
+// DİKKAT: Sıralı değildir, *us.begin() en küçüğü vermez!
+// Worst Case (Çakışma): O(N) olabilir (Yarışmalarda nadirdir ama bil)
+
+// ============================================================
+// 4. MAP (Sıralı Sözlük) - <map>
+//    Kullanım: Anahtar-Değer (Key-Value). Anahtara göre SIRALAR.
+// ============================================================
+map<string, int> m;
+
+m["Ali"] = 90;              // Ekle veya Güncelle -> O(log N)
+m["Veli"]++;                // Veli yoksa 0 yapıp 1 arttırır
+
+// Erişim
+cout << m["Ali"];           // 90 yazar.
+if (m.count("Ayse")) {}     // Anahtar var mı? -> O(log N)
+
+// Silme
+m.erase("Ali");             // Anahtarı ve değeri siler
+
+// Gezinme (Key'e göre A'dan Z'ye sıralı gelir)
+for(auto const& [key, val] : m) {
+    cout << key << ": " << val << "\n";
+}
+
+// ============================================================
+// 5. UNORDERED_MAP (Sırasız Sözlük) - <unordered_map>
+//    Kullanım: Sıra önemsiz, hızlı erişim lazım.
+//    Yapı: Hash Table
+// ============================================================
+unordered_map<string, int> um;
+
+um["Kalem"] = 5;            // Ekle -> O(1)
+if (um.count("Kalem")) {}   // Var mı? -> O(1)
+
+// DİKKAT: İterasyon yaparsan rastgele sırada gelir!
+
+// ============================================================
+//      ÖZET TABLO (HANGİSİNİ SEÇEYİM?)
+// ============================================================
+// 1. Sadece sayıları tutacağım, sıra önemli değil, tekrarlı olabilir:
+//    -> VECTOR
+
+// 2. Sayılar sıralı olsun, tekrarlı olmasın:
+//    -> SET (O(log N))
+
+// 3. Sadece "Bu sayı var mı?" diye bakacağım, çok hızlı olsun:
+//    -> UNORDERED_SET (O(1))
+
+// 4. Bir şeye karşılık bir değer tutacağım (İsim -> Numara):
+//    -> MAP (Sıralı lazımsa) veya UNORDERED_MAP (Hız lazımsa)

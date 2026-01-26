@@ -6,7 +6,7 @@ using namespace std;
 
 long long helper(vector<long long>& A, vector<long long>& B, long long idx, long long penalty, long long type, vector<vector<long long>>& dp)
 {
-    if (idx == A.size()) return 0;  // Base case
+    if (idx >= A.size()) return 0;  // Base case
 
     if (dp[idx][type] != -1) return dp[idx][type];
 

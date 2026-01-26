@@ -1,9 +1,9 @@
 #include <iostream>
 
+using namespace std;
+
 int main() {
-
-    char c = 9 + '0';
-    std::cout << c;
-
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
     return 0;
 }

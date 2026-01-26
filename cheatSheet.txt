@@ -1,0 +1,120 @@
+// ==========================================
+//      C++ YARISMA KOPYA KAGIDI (CHEAT SHEET)
+// ==========================================
+
+// 1. BASLANGIC SABLONU (Bunu direkt yapistir)
+// ------------------------------------------
+#include <bits/stdc++.h> 
+using namespace std;
+
+#define ll long long
+#define all(v) v.begin(), v.end()
+#define pb push_back
+#define fi first
+#define se second
+
+void solve() {
+    // KOD BURAYA
+    int n;
+    cin >> n;
+    vector<int> v(n);
+    for(int i=0; i<n; i++) cin >> v[i];
+
+    // ...
+    cout << "Cevap" << "\n";
+}
+
+int main() {
+    // HIZLANDIRMA (Çok önemli!)
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
+    int t = 1;
+    cin >> t; // Test case varsa
+    while(t--) {
+        solve();
+    }
+    return 0;
+}
+
+// ==========================================
+//      SIK KULLANILAN VERI YAPILARI
+// ==========================================
+
+// VECTOR (Dizi)
+// ------------------
+vector<int> v;
+v.push_back(5);          // Ekle
+v.pop_back();            // Sondan sil
+v.size();                // Boyut
+v.clear();               // Temizle
+v.empty();               // Bos mu?
+v.resize(10, -1);        // 10 boyut yap, hepsini -1 doldur
+vector<int> a(n, 0);     // n boyutlu, 0 dolu vector
+
+// PAIR (Ikili)
+// ------------------
+pair<int, int> p = {1, 5};
+// p.first -> 1
+// p.second -> 5
+vector<pair<int, string>> vp; // Pair listesi
+
+// MAP (Sozluk / Frekans)
+// ------------------
+map<string, int> m;
+m["elma"] = 5;
+m["armut"]++;            // Sayac arttir
+if (m.count("elma")) {}  // Var mi kontrolu (Varsa 1 doner)
+
+// ITERASYON (Gezinme)
+// ------------------
+for(auto x : v) cout << x << " "; // Vector gezme
+for(auto p : m) cout << p.first << " " << p.second; // Map gezme
+
+// ==========================================
+//      ALGORITMALAR (<algorithm>)
+// ==========================================
+
+// SIRALAMA
+sort(v.begin(), v.end());             // Kucukten buyuge
+sort(v.rbegin(), v.rend());           // Buyukten kucuge
+sort(all(v));                         // Macro varsa
+
+// ARAMA & MIN/MAX
+bool varMi = binary_search(all(v), 5); // Hizli arama (Dizi sirali olmali!)
+int enKucuk = *min_element(all(v));    // En kucuk eleman
+int enBuyuk = *max_element(all(v));    // En buyuk eleman
+int x = max(a, b);                     // İki sayıdan buyugu
+
+// TERS CEVIRME
+reverse(all(v)); 
+
+// ==========================================
+//      STRING & MATEMATIK
+// ==========================================
+
+// STRING
+string s = "kod";
+s += 'a';                  // koda
+s.length();                // uzunluk
+s.substr(0, 2);            // "ko" (baslangic, adet)
+int sayi = stoi("123");    // String -> Int
+string str = to_string(123); // Int -> String
+
+// MATEMATIK
+long long buyuk = 1e18;    // Cok buyuk sayi
+__gcd(12, 18);             // EBOB (6 doner)
+abs(-5);                   // Mutlak deger
+pow(2, 5);                 // Us alma (Dikkat: Double doner!)
+// Tek cift kontrolu:
+if (x % 2 == 0) {} // Cift
+if (x % 2 != 0) {} // Tek
+
+// ==========================================
+//      ZAMAN LIMITI KONTROLU (N ne kadar?)
+// ==========================================
+// N <= 10       -> O(N!)       (Permutasyon, Backtracking)
+// N <= 20       -> O(2^N)      (Bitmask, Recursion)
+// N <= 5000     -> O(N^2)      (Iki dongu - for i for j)
+// N <= 2*10^5   -> O(N log N)  (Sort, Map, Binary Search) - EN YAYGIN!
+// N <= 10^9     -> O(sqrt N)   (Asal kontrol) veya O(log N)

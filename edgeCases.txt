@@ -1,0 +1,9 @@
+N (Girdi Boyutu),İzin Verilen Karmaşıklık,Kullanabileceğin Algoritmalar / Yöntemler
+N≤10…20,O(2N) veya O(N!),"Backtracking, Recursion (Tüm ihtimalleri dene), Bitmask DP."
+N≤100,O(N4),"Floyd-Warshall (Tüm düğümler arası en kısa yol), Matrix Çarpımı."
+N≤500,O(N3),"Basit DP, İç içe 3 döngü."
+N≤5.000,O(N2),"İç içe 2 döngü, Graph (BFS/DFS - Adjacency Matrix ile), Insertion/Bubble Sort."
+N≤2×105,O(NlogN) veya O(N),"EN SIK ÇIKAN ARALIK!Merge/Quick Sort (std::sort), Binary Search, Heap (Priority Queue), Dijkstra, Set/Map kullanımı."
+N≤106,O(N) veya O(NlogN),"Two Pointers, Sliding Window, Union-Find (DSU), KMP (String), Hash Map."
+N≤109,O(N​),"Asal Sayı Kontrolü, Bölenleri Bulma."
+N≤1018,O(logN) veya O(1),"Binary Search, Matematiksel Formüller, Matrix Exponentiation (Fibonacci vb.)."

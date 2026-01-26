@@ -1,60 +1,28 @@
 #include <iostream>
 #include <vector>
+#include <algorithm>
 
 using namespace std;
 
-bool canPartition(vector<int>& nums)
+int helper(int pos, int mod, vector<vector<int>>& dp, vector<int>& nums)
 {
-    int sum = 0;
-    for (int i = 0; i < nums.size(); i++) sum += nums[i];
+    if (pos == nums.size()) return 0;
+    if (dp[pos][mod] != -1) return dp[pos][mod];
 
-    if (sum % 2 == 0)
-    {
-        vector<int> cache;
-        vector<int> seen(sum, false);
-        cache.push_back(0);
-        seen[0] = true;
-        int size;
-        int element;
-        int added;
+    int opt1 = helper(pos + 1, (mod + nums[pos]) % 3, dp, nums);    // al
+    int opt2 = helper(pos + 1, mod, dp, nums);    // alma
 
-        for (int i = 0; i < nums.size(); i++)
-        {
-            element = nums[i];
-            size = cache.size();
+    return dp[pos][mod] = max(opt1, opt2);
+}
 
-            for (int j = 0; j < size; j++)
-            {
-                added = element + cache[j];
-                if (added == sum/2) return true;
+void func(vector<int>& nums)
+{
+    vector<vector<int>> dp(nums.size(), vector<int>(3, -1));
 
-                if(added >= sum)
-                {
-                    cache.push_back(added);
-                }
-                else
-                {
-                    if(!seen[added])
-                    {
-                        cache.push_back(added);
-                        seen[added] = true;
-                    } 
-                }
-            } 
-        }
-        return false;
-    }
-    else
-    {
-        return false;
-    }
+    return helper(0, )
 }
 
 int main() {
     
-    vector<int> myarr = {100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,100,99,97};
-
-    std::cout << canPartition(myarr) << std::endl;
-
     return 0;
 }
