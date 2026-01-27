@@ -2,7 +2,7 @@
 
 using namespace std;
 
-const long long int p = 998244353;    // MOD
+const long long int p = 1e9 + 7;    // MOD
 
 long long int factorial(long long int n)
 {
@@ -30,12 +30,13 @@ long long int fastExp(long long int A, long long int B)
 
 long long int combination(long long int A, long long int B)
 {
+    long long int x = factorial(A);
     long long int y = fastExp(factorial(B), p - 2);
-    long long int nominator = 1;
+    long long int z = fastExp(factorial(A - B), p - 2);
 
-    for (int i = 0; i < B; i++) nominator = nominator * (A - i) % p;
-
-    return (nominator * y) % p;
+    long long int result = (x * y) % p; // her çarpım için modül alma
+    result = (result * z) % p;
+    return result;
 }
 
 int32_t main() {
@@ -45,7 +46,7 @@ int32_t main() {
     long long int A, B;
     cin >> A >> B;
 
-    std::cout << combination((A + B - 2) % p, (A - 1) % p);
+    std::cout << combination(A, B);
     
     return 0;
 }
