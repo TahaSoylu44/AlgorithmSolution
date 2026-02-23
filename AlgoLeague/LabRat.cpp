@@ -5,99 +5,151 @@ using namespace std;
 #define int long long
 #define ll long long
 
-int helper(vector<vector<char>>& matrix, vector<vector<int>>& dp, int row, int column, int step, int R, int C, char c, int movement)
+int solve(vector<vector<char>>& labmap, int R, int C)
 {
-    if (row == R && column == C) return step;
-    if (matrix[row][column] == 'x') return 1e9;
-    if (dp[row][column] != -1) return dp[row][column];
+    pair<int, int> node = {1,1};
+    queue<pair<pair<int, int>, int>> q;
+    q.push({node, 0});
 
-    char now = matrix[row][column];
+    vector<vector<bool>> visited(R, vector<bool>(C, false));
+    visited[1][1] = true;
+    pair<int, int> newNode;
 
-    int opt1 = 1e9;
-    int opt2 = 1e9;
-    int opt3 = 1e9;
-    int opt4 = 1e9;
-
-    if (now == '+')
+    while (!q.empty())
     {
-        if (movement)   // dikey
+        pair<pair<int, int>, int> mypair = q.front();
+        q.pop();
+        node = mypair.first;
+
+        if (node.first == R - 2 && node.second == C - 2) return mypair.second;  // vardik
+
+        char c = labmap[node.first][node.second];
+
+        if (c == '+')
         {
-            if (now == '+')
+            // yukari
+            if (labmap[node.first - 1][node.second] == '+' || labmap[node.first - 1][node.second] == '|')
             {
-                // olur
+                newNode = {node.first - 1, node.second};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
-            else if (now == '|')
+
+            // asagi
+            if (labmap[node.first + 1][node.second] == '+' || labmap[node.first + 1][node.second] == '|')
             {
-                // olur
+                newNode = {node.first + 1, node.second};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
-            else    // olmaz
+
+            // sağ
+            if (labmap[node.first][node.second + 1] == '+' || labmap[node.first][node.second + 1] == '-')
             {
-                /* code */
+                newNode = {node.first, node.second + 1};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
+            }
+
+            // sol
+            if (labmap[node.first][node.second - 1] == '+' || labmap[node.first][node.second - 1] == '-')
+            {
+                newNode = {node.first, node.second - 1};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
         }
-        else    // yatay
+        else if (c == '-')
         {
-            if (now == '+')
+            // sağ
+            if (labmap[node.first][node.second + 1] == '+' || labmap[node.first][node.second + 1] == '-')
             {
-                // olur
+                newNode = {node.first, node.second + 1};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
-            else if (now == '-')
+
+            // sol
+            if (labmap[node.first][node.second - 1] == '+' || labmap[node.first][node.second - 1] == '-')
             {
-                // olur
+                newNode = {node.first, node.second - 1};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
-            else    // olmaz
+        }
+        else if (c == '|')
+        {
+            // yukari
+            if (labmap[node.first - 1][node.second] == '+' || labmap[node.first - 1][node.second] == '|')
             {
-                /* code */
+                newNode = {node.first - 1, node.second};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
+            }
+
+            // asagi
+            if (labmap[node.first + 1][node.second] == '+' || labmap[node.first + 1][node.second] == '|')
+            {
+                newNode = {node.first + 1, node.second};
+
+                if (!visited[newNode.first][newNode.second])
+                {
+                    q.push({newNode, mypair.second + 1});
+                    visited[newNode.first][newNode.second] = true;
+                }
             }
         }
     }
-    else if (now == '-')
-    {
-        if (movement)   // dikey
-        {
-            return 1e9;
-        }
-        else    // yatay
-        {
-            // olur
-        }
-    }
-    else if (now == '|')
-    {
-        if (movement)   // dikey
-        {
-            // olur
-        }
-        else    // yatay
-        {
-            return 1e9;
-        }
-    }
-}
 
-int solve(vector<vector<char>>& matrix, int R, int C)
-{
-    vector<vector<int>> dp(R + 2, vector<int>(C + 2, -1));
-
-    return helper(matrix, dp, 1, 1, 1, R, C);
+    return -1;
 }
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
-    
+
     int R, C;
     cin >> R >> C;
 
-    vector<vector<char>> matrix(R + 2, vector<char>(C + 2, 'x'));
+    vector<vector<char>> labmap(R + 2, vector<char>(C + 2, 'x'));
 
     for (int i = 1; i <= R; i++)
     {
         for (int j = 1; j <= C; j++)
         {
-            cin >> matrix[i][j];
+            cin >> labmap[i][j];
         }
     }
+
+    std::cout << solve(labmap, R + 2, C + 2);
     
     return 0;
 }

@@ -6,19 +6,13 @@ using namespace std;
 #define ll long long
 
 int32_t main() {
-
-    // SİHİRLİ SATIR BURADA:
-    // (Dosyanın tam yolunu yazarsan çalışma dizini hatasından %100 kurtulursun)
-    // Örnek Windows yolu: "C:\\Users\\Kullanici\\Desktop\\p067_triangle.txt"
     freopen("/home/tahas44/Desktop/sources/AlgorithmProblems/ProjectEuler/triangle.txt", "r", stdin); 
 
     vector<vector<int>> triangle(100);
-
-    // Sanki normal terminalden sayı giriyormuşsun gibi cin kullan!
     int number;
     for (int i = 0; i < 100; i++) {
         for (int j = 0; j <= i; j++) {
-            cin >> number; // Artık txt dosyasından okuyor!
+            cin >> number;
             triangle[i].push_back(number);
         }
     }
