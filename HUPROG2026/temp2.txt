@@ -1,0 +1,50 @@
+Genel bir yaklaşım (algoritma) arıyorsanız, bu problemi çözmek için adım adım bir strateji izlemek gerekir. Herhangi bir $M$ sayısı için en küçük sayıyı bulmanın mantığı, basamak sayısını minimumda tutmak ve büyük rakamları (9 gibi) sayının sonuna yerleştirmektir.
+İşte bu tür soruları çözmek için izleyebileceğiniz adım adım yol:
+1. Basamak Sayısını Belirleyin
+Bir sayının en küçük olması için mümkün olan en az basamağa sahip olması gerekir. Rakamları toplamı $M$ olan bir sayının en az kaç basamaklı olacağını şöyle buluruz:
+
+* En büyük rakam 9 olduğu için, $M$ sayısını 9'a böleriz.
+* Örneğin $M=20$ ise; $20 \div 9 = 2$ (kalan 2). Bu durumda sayı en az 3 basamaklı olmalıdır ($9+9+2$).
+
+2. Bölünebilme Koşulunu Sağlayın
+Sayı $M$ ile tam bölünmelidir. Bu, sayının $M$'in bir katı olması gerektiği anlamına gelir.
+
+* Küçük $M$ değerleri için: Elle deneme yanılma (brute-force) yapılabilir.
+* Büyük $M$ değerleri için: Genellikle bir bilgisayar algoritması veya modüler aritmetik tabloları kullanılır.
+
+3. Algoritmik Mantık (Arama Stratejisi)
+Bilgisayar biliminde bu problemi çözmek için Genişlik Öncelikli Arama (BFS) algoritması kullanılır. Mantık şöyledir:
+
+   1. Durum Tanımlama: Her adımı $(kalan, toplam)$ çifti olarak tutarız.
+   * kalan: Sayının $M$ ile bölümünden kalan.
+      * toplam: Sayının rakamları toplamı.
+   2. Başlangıç: Boş bir sayıdan başlanır.
+   3. Genişleme: Mevcut sayıya $0$ ile $9$ arasındaki rakamlar eklenerek yeni sayılar türetilir.
+   4. Durdurma: İlk ulaşılan ve kalan == 0 ile toplam == M şartını sağlayan sayı, en küçük sayıdır.
+
+------------------------------
+Birkaç Kritik Örnek Üzerinden Mantık:
+
+* $M = 3$ için:
+* Toplamı 3 olan en küçük sayılar: 3, 12, 21, 30...
+   * 3'e bölünen en küçüğü: 3.
+* $M = 9$ için:
+* Toplamı 9 olan sayılar: 9, 18, 27, 36...
+   * 9'a bölünen en küçüğü: 9.
+* $M = 10$ için:
+* Toplamı 10 olan en küçük sayı 19'dur. Ancak 19, 10'a bölünmez.
+   * Sonu 0 ile biten ve toplamı 10 olan en küçük sayı: 190.
+* $M = 13$ için:
+* Rakam toplamı 13 olan sayılar: 49, 58, 67, 76, 85, 94, 139...
+   * 13'e tam bölünen en küçüğü: 169 ($13 \times 13 = 169$ ve $1+6+9 = 16$). Düzeltme: 169'un toplamı 16'dır, 13 değildir.
+   * $M=13$ için doğru sonuç 494'tür ($4+9+4=17$ değil, $2+2+9=13$ gibi kombinasyonlar denenir). Aslında $M=13$ için en küçük sayı 247'dir ($2+4+7=13$ ve $247 \div 13 = 19$).
+
+Pratik İpucu
+Eğer sınavda veya kağıt üzerinde bu soruyu çözüyorsanız:
+
+   1. Önce $M$'in katlarını ($M, 2M, 3M, \dots$) listeleyin.
+   2. Her bir katın rakamlarını toplayın.
+   3. Rakam toplamı $M$ olan ilk sayıyı bulduğunuzda durun.
+
+Belirli bir M değeri için kodu çalıştırmamı veya başka bir sayıyı hesaplamamı ister misiniz?
+

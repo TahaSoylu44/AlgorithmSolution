@@ -1,0 +1,35 @@
+Tabii ki, en basit haliyle, sanki elimizde 1'den $n$'e kadar numaralanmış Lego parçaları varmış gibi düşünelim. Amacımız bu parçaları yan yana dizmek, ama bir kuralımız var: Yan yana gelen sayılar arasındaki farkların toplamı $L$ sayısını geçmeyecek.
+Şimdi adım adım, sanki bu Legoları masaya tek tek diziyormuşuz gibi hayal et:
+1. Sayıları Sırayla Alıyoruz (1, 2, 3...)
+Önce 1 numaralı Legoyu masaya koyduk. Sonra 2'yi, sonra 3'ü... Sayıları hep küçükten büyüğe doğru elimize alıyoruz. Bu çok önemli, çünkü bir sayıyı masaya koyduğumuzda, ondan sonra gelecek her sayının ondan daha büyük olacağını biliyoruz.
+2. "Açık Uçlar" ve "Maliyet"
+Masadaki sayıların yanına yeni bir sayı eklediğinde, aradaki fark "maliyet" yaratır.
+
+* Mesela masada sadece 3 var. Yanına 5 koyarsan, aradaki fark $|3-5|=2$ olur.
+* Ama biz sayıları sırayla ($1, 2, 3...$) yerleştirdiğimiz için, masadaki her boş uca (sayıların sağına veya soluna) yeni bir sayı geleceğini biliyoruz.
+* Kritik Nokta: Eğer bir sayının yanı boşsa, oraya gelecek olan sayı mutlaka şu anki sayıdan büyük olacak. Dolayısıyla her boş uç, toplam farkı (varyasyonu) artıracak bir "potansiyel"dir.
+
+3. Masadaki Gruplar (Bloklar)
+Sayıları dizerken masada farklı gruplar oluşabilir.
+
+* Diyelim ki masanın bir ucunda (1-3) grubu var, diğer ucunda (2) duruyor.
+* Şu an masada 4 tane boş uç var (1'in solu, 3'ün sağı, 2'nin solu, 2'nin sağı).
+* Sıradaki sayıyı (mesela 4'ü) aldığında 3 seçeneğin var:
+1. Yeni bir grup başlatmak: Masaya 4'ü tek başına koyarsın. (Boş uç sayısı artar).
+   2. Mevcut bir gruba eklemek: 4'ü 3'ün yanına koyarsın. (Uç sayısı değişmez).
+   3. İki grubu birleştirmek: 4'ü (1-3) ile (2) arasına koyup onları birleştirirsin. (Boş uç sayısı azalır).
+
+4. Neden DP (Dinamik Programlama) Diyoruz?
+Çünkü her sayı eklediğimizde şunu not ediyoruz:
+
+* "Şu an masada kaç tane sayı var?"
+* "Kaç tane ayrı grup (blok) var?"
+* "Şu ana kadarki toplam fark (maliyet) kaç oldu?"
+
+Bilgisayar her adımda bu soruların cevaplarını bir tabloya yazar. Bir sonraki sayıyı koyarken eski sonuçlara bakar, "En son 2 grup varken maliyet 5'ti, şimdi 4'ü koyunca maliyet kaç olur?" diye hesaplar.
+Özetle Mantık Şu:
+Sayıları masaya tek tek koyarken, her boş uç için bir "ceza puanı" (fark) ödüyoruz. Eğer çok fazla grup yaparsak veya sayıları çok dağınık koyarsak, uç sayısı artacağı için toplam fark ($L$) çok çabuk yükselir ve sınırı aşarız.
+Bizim amacımız, bu uçları akıllıca yöneterek (bazılarını birleştirip kapatarak, bazılarını açık bırakarak) toplam farkı $L$ veya altında tutan tüm farklı dizilim yollarını saymak.
+------------------------------
+Bir örnek denemek ister misin? Mesela $n=3$ (sayılar 1, 2, 3) ve $L=2$ olsun. Sence hangi dizilimler bu kurala uyar? (Hatırla: $|f_1-f_2| + |f_2-f_3| \le 2$ olmalı).
+
