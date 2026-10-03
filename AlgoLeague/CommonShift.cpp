@@ -3,62 +3,54 @@
 using namespace std;
 
 #define int long long
-#define ll long long
-
-int gcd(int a, int b)
-{
-    if (a == 0 && b == 0) return -1;
-    if (a == 0) return b;
-    if (b == 0) return a;
-
-    return gcd(b, a % b);
-}
-
-vector<bool> isPrime(1e5 + 1, true);
-
-void sieve()
-{
-    isPrime[0] = isPrime[1] = false;
-    for (int i = 4; i < 501; i += 2) isPrime[i] = false;
-
-    for (int i = 3; i * i < 501; i += 2)
-    {
-        if (isPrime[i])
-        {
-            for (int j = i * i; j < 501; j += (i * 2))
-            {
-                isPrime[j] = false;
-            }
-        }
-    }
-}
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
 
-    sieve();
-    int a,b;
-    cin >> a >> b;
-    int i;
+    int a, b;
+    if (!(cin >> a >> b)) return 0;
 
-    if (min(a,b) & 1) i = min(a,b);
-    else i = min(a,b) - 1;
+    // Eğer iki makinedeki sayılar zaten eşitse
+    if (a == b) {
+        // Eğer sayı 1'den büyükse x=0 yeterlidir, aksi halde 2'ye tamamlarız
+        if (a > 1) cout << 0 << '\n';
+        else cout << 2 - a << '\n';
+        return 0;
+    }
 
-    for (; i >= 2; i -= 2)
-    {
-        if (isPrime[i])
-        {
-            int mod1 = a % i;
-            int mod2 = b % i;
+    int D = abs(a - b);
 
-            if (mod1 == mod2) 
-            {
-                std::cout << i - mod1 << '\n';
-                break;
+    // Ardışık sayıların ortak böleni yoktur
+    if (D == 1) {
+        cout << -1 << '\n';
+        return 0;
+    }
+
+    int min_x = 2e18; // Sonsuzluk
+    int temp = D;
+
+    // D'nin asal çarpanlarını buluyoruz
+    for (int i = 2; i * i <= temp; i++) {
+        if (temp % i == 0) {
+            // i bir asal çarpandır, gereken x'i hesapla
+            int x = (i - (a % i)) % i;
+            min_x = min(min_x, x);
+            
+            // i'nin diğer kuvvetlerini temizle
+            while (temp % i == 0) {
+                temp /= i;
             }
         }
     }
-    
+
+    // Eğer temp 1'den büyük kaldıysa, kendisi de bir asal sayıdır
+    if (temp > 1) {
+        int x = (temp - (a % temp)) % temp;
+        min_x = min(min_x, x);
+    }
+
+    cout << min_x << '\n';
+
     return 0;
 }

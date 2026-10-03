@@ -5,97 +5,57 @@ using namespace std;
 #define int long long
 #define ll long long
 
-class Node
-{
-    public:
-        int index;
-        vector<pair<int,int>> edges;
-};
-
-int min_cost(vector<Node>& nodelist, int start, int end)
-{
-    vector<int> cost(nodelist.size(), 1e9);
-    vector<bool> visited(nodelist.size(), false);
-    priority_queue<pair<int,int>> pq;
-    pq.push({0,start});
-
-    while (!pq.empty())
-    {
-        pair<int,int> mypair = pq.top();
-        pq.pop();
-
-        int index_cost = mypair.first;
-        int index = mypair.second;
-
-        if (visited[index]) continue;
-        visited[index] = true;
-
-        for (pair<int,int> negpair : nodelist[index].edges)
-        {
-            int neg = negpair.first;
-            int neg_cost = negpair.second;
-
-            if ((index_cost + neg_cost) < (cost[neg]))
-            {
-                cost[neg] = index_cost + neg_cost;
-                pq.push({cost[neg], neg});
-            }
-        }
-    }
-
-    return cost[end];
-}
+const int INF = 1e18;
 
 int32_t main() {
     ios_base::sync_with_stdio(false);
     cin.tie(NULL);
     
-    int num_of_bus, num_of_queries;
-    vector<int> bus_point;
-    bus_point.push_back(0);
-    int d;
+    int N, Q;
+    cin >> N >> Q;
+    int s, f, d;
 
-    for (int i = 0; i < num_of_bus - 1; i++)
+    vector<int> bus_stops = {-INF, 0};
+    for (int i = 0; i < N - 1; i++)
     {
         cin >> d;
-        int newd = d + bus_point.back();
-        bus_point.push_back(newd);
+        bus_stops.push_back(bus_stops.back() + d);
     }
+    bus_stops.push_back(INF);
 
-    // *******************************
-    vector<pair<int,int>> query_pair;
-    int xs, xf;
-    int max_final = 0;
+    int s_left_idx;
+    int s_right_idx;
+    int f_left_idx;
+    int f_right_idx;
+    int s_left;
+    int s_right;
+    int f_left;
+    int f_right;
+    int min_energy;
 
-    for (int i = 0; i < num_of_queries; i++)
+    while (Q--)
     {
-        cin >> xs >> xf;
-        max_final = max(max_final, xf);
-        query_pair.push_back({xs,xf});
-    }
+        cin >> s >> f;
+        min_energy = 2 * abs(s - f);
 
-    vector<Node> nodelist(max_final + 1);
+        // s.left -> f.left  s.right -> f.left  s.left -> f.right  s.right -> r.fight
 
-    for (int i = max_final; i >= 0; i--)
-    {
-        Node node = Node();
-        node.index = i;
-        for (int j = i + 1; j <= max_final; j++) node.edges.push_back({j,2});
-    }
+        s_left_idx = (upper_bound(bus_stops.begin(), bus_stops.end(), s)) - bus_stops.begin() - 1;
+        s_right_idx = (upper_bound(bus_stops.begin(), bus_stops.end(), s) - bus_stops.begin());
+        f_left_idx = (upper_bound(bus_stops.begin(), bus_stops.end(), f)) - bus_stops.begin() - 1;
+        f_right_idx = (upper_bound(bus_stops.begin(), bus_stops.end(), f) - bus_stops.begin());
 
-    for (int num : bus_point)
-    {
-        for (int inner_num : bus_point)
-        {
-            if (num != inner_num) nodelist[num].edges.push_back({inner_num, 1});
-        }
-    }
+        s_left = bus_stops[s_left_idx];
+        s_right = bus_stops[s_right_idx];
+        f_left = bus_stops[f_left_idx];
+        f_right = bus_stops[f_right_idx];
 
-    //************************************************** */
+        min_energy = min(min_energy, 2 * abs(s - s_left) + abs(f_left - s_left) + 2 * abs(f - f_left));
+        min_energy = min(min_energy, 2 * abs(s - s_right) + abs(f_left - s_right) + 2 * abs(f - f_left));
+        min_energy = min(min_energy, 2 * abs(s - s_left) + abs(f_right - s_left) + 2 * abs(f - f_right));
+        min_energy = min(min_energy, 2 * abs(s - s_right) + abs(f_right - s_right) + 2 * abs(f - f_right));
 
-    for (pair<int,int> query : query_pair)
-    {
-        std::cout << min_cost(nodelist, query.first, query.second) << '\n';
+        std::cout << min_energy << '\n';
     }
     
     return 0;
